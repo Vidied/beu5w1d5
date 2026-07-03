@@ -1,6 +1,7 @@
 package davidepan.beu5w1d5.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ uniqueConstraints = {
 })
 @Data
 @NoArgsConstructor
+
 public class Prenotazione {
 
     @Id
@@ -30,4 +32,9 @@ public class Prenotazione {
     @JoinColumn(name = "postazione_id", nullable = false)
     private Postazione postazione;
 
+    public Prenotazione(Postazione postazione, Utente utente, LocalDate data) {
+        this.postazione = postazione;
+        this.utente = utente;
+        this.data = data;
+    }
 }

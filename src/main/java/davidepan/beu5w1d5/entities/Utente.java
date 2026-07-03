@@ -1,6 +1,7 @@
 package davidepan.beu5w1d5.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.metamodel.mapping.NonAggregatedIdentifierMapping;
@@ -26,4 +27,11 @@ public class Utente {
     private String cognome;
     @Column(nullable = false, unique = true)
     private String email;
+
+    public Utente(String email, String cognome, String nome, String username) {
+        this.email = email;
+        this.cognome = cognome;
+        this.nome = nome;
+        this.username = username;
+    }
 }

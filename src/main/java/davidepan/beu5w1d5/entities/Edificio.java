@@ -1,6 +1,7 @@
 package davidepan.beu5w1d5.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,10 @@ public class Edificio {
     private String indirizzo;
     @Column(nullable = false)
     private String citta;
+
+    public Edificio(String citta, String indirizzo, String nome) {
+        this.citta = citta;
+        this.indirizzo = indirizzo;
+        this.nome = nome;
+    }
 }

@@ -2,6 +2,7 @@ package davidepan.beu5w1d5.entities;
 
 import davidepan.beu5w1d5.enums.TipoPostazione;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "postazioni")
 @Data
 @NoArgsConstructor
+
 public class Postazione {
 
     @Id
@@ -26,4 +28,11 @@ public class Postazione {
     @ManyToOne
     @JoinColumn(name = "edificio_id", nullable = false)
     private Edificio edificio;
+
+    public Postazione(String descrizione, TipoPostazione tipo, Integer maxPartecipanti, Edificio edificio) {
+        this.descrizione = descrizione;
+        this.tipo = tipo;
+        this.maxPartecipanti = maxPartecipanti;
+        this.edificio = edificio;
+    }
 }

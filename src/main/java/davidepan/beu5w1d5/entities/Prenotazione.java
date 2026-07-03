@@ -29,5 +29,5 @@ public class Prenotazione {
     @ManyToOne
     @JoinColumn(name = "postazione_id", nullable = false)
     private Postazione postazione;
-    
+
 }

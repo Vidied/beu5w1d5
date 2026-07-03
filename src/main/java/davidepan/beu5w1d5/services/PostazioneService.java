@@ -18,7 +18,7 @@ public class PostazioneService {
         return postazioneRepository.save(postazione);
     }
 
-    public List<Postazione> ricercaPostazione (TipoPostazione tipo, String citta){
+    public List<Postazione> cercaPostazione(TipoPostazione tipo, String citta){
         return postazioneRepository.findByTipoAndEdificioCitta(tipo, citta);
     }
 }

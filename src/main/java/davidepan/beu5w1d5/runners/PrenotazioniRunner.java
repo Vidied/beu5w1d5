@@ -2,16 +2,21 @@ package davidepan.beu5w1d5.runners;
 
 import davidepan.beu5w1d5.entities.Edificio;
 import davidepan.beu5w1d5.entities.Postazione;
+import davidepan.beu5w1d5.entities.Prenotazione;
 import davidepan.beu5w1d5.entities.Utente;
 import davidepan.beu5w1d5.enums.TipoPostazione;
+import davidepan.beu5w1d5.repositories.PrenotazioneRepository;
 import davidepan.beu5w1d5.services.EdificioService;
 import davidepan.beu5w1d5.services.PostazioneService;
 import davidepan.beu5w1d5.services.PrenotazioneService;
 import davidepan.beu5w1d5.services.UtenteService;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Slf4j
 @Component
@@ -68,4 +73,30 @@ public class PrenotazioniRunner implements CommandLineRunner {
         u2 = utenteService.salvaUtente(u2);
         Utente u3 = new Utente("Yogurtino@gmail.com","Yoyo","Yomino","YominoYougurtino");
         u3 = utenteService.salvaUtente(u3);
+
+        log.info("Fine creazione oggetti per DB");
+
+        //Creazione delle prenotazioni
+        log.info("Creazione delle prenotazioni");
+
+        try {
+            Prenotazione prenotazione = new Prenotazione();
+            prenotazione.setData(LocalDate.now().plusDays(2));
+            prenotazione.setUtente(u1);
+            prenotazione.setPostazione(pos1);
+
+            Prenotazione prenotazioneSalvata = prenotazioneService.prenotaPostazione(prenotazione);
+            log.info("Prenotazione registrata con successo! ID: " + prenotazioneSalvata.getId());
+
+            //Verifica forzando una prenotazione nello stesso giorno e stesso utente
+            Prenotazione prenotazione2 = new Prenotazione();
+            prenotazione.setData(LocalDate.now().plusDays(2));
+            prenotazione.setUtente(u1);
+            prenotazione.setPostazione(pos1);
+
+            Prenotazione prenotazioneSalvata2 = prenotazioneService.prenotaPostazione(prenotazione2);
+            log.info("Prenotazione registrata con successo! ID: " + prenotazioneSalvata2.getId());
+        } catch (RuntimeException e){
+            log.error("Errore:", e.getMessage());
+        }
 }}

@@ -12,11 +12,11 @@ public class PrenotazioneService {
     private PrenotazioneRepository prenotazioneRepository;
 
     public Prenotazione prenotaPostazione(Prenotazione prenotazione){
-        if (prenotazioneRepository.prenotazioneDataPostazione(prenotazione.getData(), prenotazione.getPostazione())){
+        if (prenotazioneRepository.existsByDataAndPostazione(prenotazione.getData(), prenotazione.getPostazione())){
             throw new RuntimeException("Errore: Postazione occupata per quella data");
         }
 
-        if(prenotazioneRepository.prenotazioneDataUtente(prenotazione.getData(), prenotazione.getUtente())){
+        if(prenotazioneRepository.existsByDataAndUtente(prenotazione.getData(), prenotazione.getUtente())){
             throw new RuntimeException("Errore: L'utente ha già una prenotazione per quella data");
         }
         return prenotazioneRepository.save((prenotazione));

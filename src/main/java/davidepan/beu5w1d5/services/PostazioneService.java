@@ -19,6 +19,6 @@ public class PostazioneService {
     }
 
     public List<Postazione> ricercaPostazione (TipoPostazione tipo, String citta){
-        return postazioneRepository.findByTipoAndCitta(tipo, citta);
+        return postazioneRepository.findByTipoAndEdificioCitta(tipo, citta);
     }
 }

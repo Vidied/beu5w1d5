@@ -17,6 +17,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -45,13 +46,13 @@ public class PrenotazioniRunner implements CommandLineRunner {
 //        ed1 = edificioService.salvaEdificio(ed1);
 
         //Creazione dei edifici
-        Edificio ed1 = new Edificio( "Poste Italiane", "Via duomo 1", "Viterbo");
+        Edificio ed1 = new Edificio( "Viterbo", "Via duomo 1","Poste Italiane" );
         ed1 = edificioService.salvaEdificio(ed1);
 
-        Edificio ed2 = new Edificio( "Poste non italiane", "Via duomo 2", "Viterbo");
+        Edificio ed2 = new Edificio( "Viterbo", "Via duomo 2", "Poste non italiane");
         ed2 = edificioService.salvaEdificio(ed2);
 
-        Edificio ed3 = new Edificio( "Poste estere", "Via donna 1", "Roma");
+        Edificio ed3 = new Edificio( "Roma", "Via donna 1", "Poste estere");
         ed3 = edificioService.salvaEdificio(ed3);
 
         //Creazione delle postazioni
@@ -90,13 +91,21 @@ public class PrenotazioniRunner implements CommandLineRunner {
 
             //Verifica forzando una prenotazione nello stesso giorno e stesso utente
             Prenotazione prenotazione2 = new Prenotazione();
-            prenotazione.setData(LocalDate.now().plusDays(2));
-            prenotazione.setUtente(u1);
-            prenotazione.setPostazione(pos1);
+            prenotazione2.setData(LocalDate.now().plusDays(2));
+            prenotazione2.setUtente(u1);
+            prenotazione2.setPostazione(pos1);
 
             Prenotazione prenotazioneSalvata2 = prenotazioneService.prenotaPostazione(prenotazione2);
             log.info("Prenotazione registrata con successo! ID: " + prenotazioneSalvata2.getId());
         } catch (RuntimeException e){
-            log.error("Errore:", e.getMessage());
+            log.error("Errore: {}", e.getMessage());
+        }
+
+        //Test ricerca postazioni
+        List<Postazione> postazioniTrovate = postazioneService.cercaPostazione(TipoPostazione.PRIVATO, "Viterbo");
+
+        log.info("Postazioni trovate a Viterbo di tipo PRIVATO: " + postazioniTrovate.size());
+        for (Postazione p : postazioniTrovate) {
+            log.info("ID: " + p.getId() + " Descrizione: " + p.getDescrizione());
         }
 }}
